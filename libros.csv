@@ -1,0 +1,31 @@
+codigo,titulo,autor,categoria,anio,estado
+101,Programacion en Java,Herbert Schildt,Programacion,2022,Disponible
+102,Estructuras de Datos,Mark Allen Weiss,Computacion,2021,Disponible
+103,Introduccion a los Algoritmos,Thomas Cormen,Algoritmos,2022,Prestado
+104,Patrones de Diseno,Erich Gamma,Programacion,2015,Disponible
+105,Codigo Limpio,Robert C. Martin,Programacion,2008,Disponible
+106,El Programador Pragmatico,Andrew Hunt,Programacion,2019,Disponible
+107,Inteligencia Artificial,Stuart Russell,Computacion,2020,Disponible
+108,Redes de Computadoras,Andrew S. Tanenbaum,Redes,2013,Disponible
+109,Sistemas Operativos Modernos,Andrew S. Tanenbaum,Sistemas,2015,Disponible
+110,Base de Datos Conceptos,Abraham Silberschatz,Bases de Datos,2019,Disponible
+111,Compiladores: Principios,Alfred Aho,Computacion,2006,Disponible
+112,Ingenieria de Software,Ian Sommerville,Ingenieria,2018,Disponible
+113,Diseno de Interfaces,Ben Shneiderman,Diseno,2016,Disponible
+114,Criptografia Aplicada,Bruce Schneier,Seguridad,2015,Disponible
+115,Fundamentos de SQL,Itzik Ben-Gan,Bases de Datos,2016,Disponible
+116,Desarrollo Web Agil,Sam Ruby,Desarrollo Web,2017,Disponible
+117,Git y GitHub Practico,Richard Silver,Herramientas,2021,Disponible
+118,Machine Learning Guia,Aurelien Geron,Algoritmos,2019,Disponible
+119,Pensar en Python,Allen B. Downey,Programacion,2015,Disponible
+120,El Arte de Programar,Donald Knuth,Computacion,2011,Disponible
+121,C++ Lenguaje Estandar,Bjarne Stroustrup,Programacion,2013,Disponible
+122,Java Efectivo,Joshua Bloch,Programacion,2018,Disponible
+123,Refactorizacion,Martin Fowler,Programacion,2018,Disponible
+124,Arquitectura Limpia,Robert C. Martin,Programacion,2017,Disponible
+125,Desarrollo de Algoritmos,Jon Kleinberg,Algoritmos,2005,Disponible
+126,Seguridad en Redes,William Stallings,Seguridad,2017,Disponible
+127,Sistemas Distribuidos,Maarten van Steen,Sistemas,2017,Disponible
+128,Metodologias Agiles,Ken Schwaber,Gestion,2020,Disponible
+129,Deep Learning,Ian Goodfellow,Algoritmos,2016,Disponible
+130,NoSQL Esencial,Pramod J. Sadalage,Bases de Datos,2012,Disponible
