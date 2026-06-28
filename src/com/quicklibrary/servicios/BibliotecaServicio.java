@@ -121,7 +121,6 @@ public class BibliotecaServicio {
 
     /**
      * Busca un libro por su código utilizando el ABB.
-     * Complejidad: O(log n) promedio.
      */
     public Libro buscarLibroPorCodigo(int codigo) {
         return catalogo.buscar(new Libro(codigo));
