@@ -26,9 +26,9 @@ public class MenuConsola {
         int opcion;
         do {
             mostrarMenuPrincipal();
-            opcion = Validador.leerEnteroRango("Seleccione una opción (1-12): ", 1, 12);
+            opcion = Validador.leerEnteroRango("Seleccione una opción (1-16): ", 1, 16);
             procesarOpcion(opcion);
-        } while (opcion != 12);
+            } while (opcion != 16);
     }
 
     private void mostrarMenuPrincipal() {
@@ -43,13 +43,16 @@ public class MenuConsola {
         System.out.println("6. Eliminar libro");
         System.out.println("7. Registrar solicitud de préstamo");
         System.out.println("8. Mostrar cola de solicitudes");
-        System.out.println("9. Atender siguiente solicitud");
-        System.out.println("10. Registrar devolución");
-        System.out.println("11. Mostrar reporte");
-        System.out.println("12. Salir");
+        System.out.println("9. Ver siguiente solicitud en espera");
+        System.out.println("10. Atender siguiente solicitud");
+        System.out.println("11. Cancelar siguiente solicitud (sin atender)");
+        System.out.println("12. Cancelar solicitud de un estudiante específico");
+        System.out.println("13. Vaciar cola de solicitudes");
+        System.out.println("14. Registrar devolución");
+        System.out.println("15. Mostrar reporte");
+        System.out.println("16. Salir");
         System.out.println("=========================================");
     }
-
     private void procesarOpcion(int opcion) {
         switch (opcion) {
             case 1:
@@ -77,15 +80,27 @@ public class MenuConsola {
                 servicio.mostrarColaSolicitudes();
                 break;
             case 9:
-                servicio.atenderSiguienteSolicitud();
+                ejecutarVerSiguienteSolicitud();
                 break;
             case 10:
-                ejecutarRegistrarDevolucion();
+                servicio.atenderSiguienteSolicitud();
                 break;
             case 11:
-                servicio.mostrarReporte();
+                ejecutarCancelarSiguienteSolicitud();
                 break;
             case 12:
+                ejecutarCancelarSolicitudPorEstudiante();
+                break;
+            case 13:
+                ejecutarVaciarColaSolicitudes();
+                break;
+            case 14:
+                ejecutarRegistrarDevolucion();
+                break;
+            case 15:
+                servicio.mostrarReporte();
+                break;
+            case 16:
                 System.out.println("\nGracias por usar QuickLibrary. ¡Hasta pronto!");
                 break;
         }
@@ -215,4 +230,18 @@ public class MenuConsola {
         int codigo = Validador.leerEntero("Ingrese el código del libro devuelto: ");
         servicio.registrarDevolucion(codigo);
     }
+    
+    /**
+     * Opción 9: Muestra la solicitud al frente de la cola sin retirarla (peek).
+     */
+    private void ejecutarVerSiguienteSolicitud() {
+        System.out.println("\n--- SIGUIENTE SOLICITUD EN ESPERA ---");
+        SolicitudPrestamo siguiente = servicio.consultarSiguienteSolicitud();
+        if (siguiente == null) {
+            System.out.println("No hay solicitudes pendientes en la cola.");
+        } else {
+            System.out.println(siguiente);
+        }
+    }
+    
 }

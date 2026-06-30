@@ -121,7 +121,6 @@ public class BibliotecaServicio {
 
     /**
      * Busca un libro por su código utilizando el ABB.
-     * Complejidad: O(log n) promedio.
      */
     public Libro buscarLibroPorCodigo(int codigo) {
         return catalogo.buscar(new Libro(codigo));
@@ -203,10 +202,60 @@ public class BibliotecaServicio {
     /**
      * Muestra el elemento al frente de la cola de solicitudes sin extraerlo.
      */
-    public SolicitudPrestamo consultarSiguienteSolicitud() {
-        return colaSolicitudes.peek();
+    public SolicitudPrestamo cancelarSiguienteSolicitud() {
+        if (colaSolicitudes.isEmpty()) {
+            return null;
+        }
+        return colaSolicitudes.dequeue();
     }
+    
+    /**
+     * Cancela la solicitud de un estudiante específico, esté o no al frente
+     * de la cola. Como Cola<T> solo expone enqueue/dequeue/peek (TDA puro,
+     * sin acceso a los nodos internos), la única forma de "sacar del medio"
+     * es reconstruir la cola completa usando esas mismas operaciones:
+     * se desencola todo, se descarta la coincidencia y se vuelve a encolar
+     * el resto en su orden original.
+     *
+     * Complejidad: O(n), donde n es el número de solicitudes en cola.
+     *
+     * @param codigoEstudiante código del estudiante cuya solicitud se cancela.
+     * @return la solicitud cancelada, o null si no se encontró ninguna coincidencia.
+     */
+    public SolicitudPrestamo cancelarSolicitudPorEstudiante(String codigoEstudiante) {
+        int totalOriginal = colaSolicitudes.size();
+        SolicitudPrestamo eliminada = null;
 
+        for (int i = 0; i < totalOriginal; i++) {
+            SolicitudPrestamo actual = colaSolicitudes.dequeue();
+            if (eliminada == null && actual.getCodigoEstudiante().equalsIgnoreCase(codigoEstudiante)) {
+                // Esta es la solicitud que queremos cancelar: no se vuelve a encolar.
+                eliminada = actual;
+            } else {
+                // Cualquier otra solicitud se reinserta para conservar el orden FIFO.
+                colaSolicitudes.enqueue(actual);
+            }
+        }
+        return eliminada;
+    }
+    
+    /**
+     * Vacía por completo la cola de solicitudes de préstamo pendientes.
+     * Operación de mantenimiento: reinicializa la cola al estado vacío.
+     *
+     * @return la cantidad de solicitudes que fueron descartadas.
+     */
+    public int vaciarColaSolicitudes() {
+        int eliminadas = 0;
+        while (!colaSolicitudes.isEmpty()) {
+            colaSolicitudes.dequeue();
+            eliminadas++;
+        }
+        return eliminadas;
+    }
+    
+    
+    
     // ==========================================
     // RF04. Préstamo de Libros
     // ==========================================
