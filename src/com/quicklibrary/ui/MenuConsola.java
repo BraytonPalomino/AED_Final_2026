@@ -207,7 +207,7 @@ public class MenuConsola {
 
     private void ejecutarRegistrarSolicitud() {
         System.out.println("\n--- REGISTRAR SOLICITUD DE PRÉSTAMO ---");
-        String codEstudiante = Validador.leerCadena("Ingrese el código del estudiante: ");
+        String codEstudiante = Validador.leerCodigoEstudiante("Ingrese el código del estudiante (8 caracteres alfanuméricos): ");
         String nomEstudiante = Validador.leerCadena("Ingrese el nombre completo del estudiante: ");
         int codLibro = Validador.leerEntero("Ingrese el código del libro solicitado: ");
 

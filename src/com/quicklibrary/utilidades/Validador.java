@@ -57,4 +57,17 @@ public class Validador {
         int anioActual = java.time.Year.now().getValue();
         return leerEnteroRango(mensaje, 1000, anioActual);
     }
+
+    /**
+     * Lee y valida un código de estudiante (exactamente 8 caracteres alfanuméricos).
+     */
+    public static String leerCodigoEstudiante(String mensaje) {
+        while (true) {
+            String entrada = leerCadena(mensaje);
+            if (entrada.length() == 8 && entrada.matches("^[a-zA-Z0-9]+$")) {
+                return entrada;
+            }
+            System.out.println("Error: El código de estudiante debe tener exactamente 8 caracteres alfanuméricos.");
+        }
+    }
 }
