@@ -24,5 +24,9 @@ public class Main {
         // 3. Lanzar la interfaz de consola
         MenuConsola menu = new MenuConsola(servicio);
         menu.iniciar();
+
+        // 4. Guardar catálogo al salir del programa
+        System.out.println("\nGuardando cambios en el catálogo...");
+        LectorCSV.guardarCatalogo(servicio.getCatalogo(), "libros.csv");
     }
 }

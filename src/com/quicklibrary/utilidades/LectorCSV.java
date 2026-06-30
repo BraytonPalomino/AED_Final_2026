@@ -108,4 +108,31 @@ public class LectorCSV {
             ));
         }
     }
+
+    /**
+     * Guarda el catálogo completo de libros desde el ABB hacia el archivo CSV.
+     */
+    public static void guardarCatalogo(ArbolBinarioBusqueda<Libro> catalogo, String rutaCSV) {
+        try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(rutaCSV))) {
+            // Escribir cabecera
+            pw.println("codigo,titulo,autor,categoria,anio,estado");
+            
+            // Recorrer el ABB y escribir cada libro
+            catalogo.recorridoInorden(libro -> {
+                String estadoStr = libro.getEstado() == EstadoLibro.PRESTADO ? "Prestado" : "Disponible";
+                pw.printf("%d,%s,%s,%s,%d,%s%n",
+                    libro.getCodigo(),
+                    libro.getTitulo(),
+                    libro.getAutor(),
+                    libro.getCategoria(),
+                    libro.getAnio(),
+                    estadoStr
+                );
+            });
+            System.out.println("Catálogo guardado con éxito en el archivo CSV: " + rutaCSV);
+        } catch (IOException e) {
+            System.out.println("Error: No se pudo guardar el catálogo en el archivo CSV. " + e.getMessage());
+        }
+    }
 }
+
