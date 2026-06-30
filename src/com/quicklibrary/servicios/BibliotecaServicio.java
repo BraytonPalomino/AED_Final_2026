@@ -350,6 +350,7 @@ public class BibliotecaServicio {
         int totalLibros = catalogo.contarElementos();
         int pendientes = colaSolicitudes.size();
 
+        // Mostrar en consola
         System.out.println("\n=========================================");
         System.out.println("            REPORTE GENERAL              ");
         System.out.println("=========================================");
@@ -358,5 +359,20 @@ public class BibliotecaServicio {
         System.out.printf("Cantidad de libros prestados:   %d%n", conteos[1]);
         System.out.printf("Solicitudes de préstamo en cola: %d%n", pendientes);
         System.out.println("=========================================");
+
+        // Exportar a archivo de texto
+        try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter("reporte_biblioteca.txt"))) {
+            pw.println("=========================================");
+            pw.println("            REPORTE GENERAL              ");
+            pw.println("=========================================");
+            pw.printf("Cantidad total de libros:       %d%n", totalLibros);
+            pw.printf("Cantidad de libros disponibles: %d%n", conteos[0]);
+            pw.printf("Cantidad de libros prestados:   %d%n", conteos[1]);
+            pw.printf("Solicitudes de préstamo en cola: %d%n", pendientes);
+            pw.println("=========================================");
+            System.out.println("Info: El reporte ha sido exportado a 'reporte_biblioteca.txt'.");
+        } catch (java.io.IOException e) {
+            System.out.println("Advertencia: No se pudo exportar el reporte a archivo: " + e.getMessage());
+        }
     }
 }
