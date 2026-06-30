@@ -43,10 +43,14 @@ public class MenuConsola {
         System.out.println("6. Eliminar libro");
         System.out.println("7. Registrar solicitud de préstamo");
         System.out.println("8. Mostrar cola de solicitudes");
-        System.out.println("9. Atender siguiente solicitud");
-        System.out.println("10. Registrar devolución");
-        System.out.println("11. Mostrar reporte");
-        System.out.println("12. Salir");
+        System.out.println("9. Ver siguiente solicitud en espera");
+        System.out.println("10. Atender siguiente solicitud");
+        System.out.println("11. Cancelar siguiente solicitud (sin atender)");
+        System.out.println("12. Cancelar solicitud de un estudiante específico");
+        System.out.println("13. Vaciar cola de solicitudes");
+        System.out.println("14. Registrar devolución");
+        System.out.println("15. Mostrar reporte");
+        System.out.println("16. Salir");
         System.out.println("=========================================");
     }
 
