@@ -202,10 +202,12 @@ public class BibliotecaServicio {
     /**
      * Muestra el elemento al frente de la cola de solicitudes sin extraerlo.
      */
-    public SolicitudPrestamo consultarSiguienteSolicitud() {
-        return colaSolicitudes.peek();
+    public SolicitudPrestamo cancelarSiguienteSolicitud() {
+        if (colaSolicitudes.isEmpty()) {
+            return null;
+        }
+        return colaSolicitudes.dequeue();
     }
-
     // ==========================================
     // RF04. Préstamo de Libros
     // ==========================================

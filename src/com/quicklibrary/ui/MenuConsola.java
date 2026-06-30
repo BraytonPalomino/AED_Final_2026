@@ -26,9 +26,9 @@ public class MenuConsola {
         int opcion;
         do {
             mostrarMenuPrincipal();
-            opcion = Validador.leerEnteroRango("Seleccione una opción (1-12): ", 1, 12);
+            opcion = Validador.leerEnteroRango("Seleccione una opción (1-16): ", 1, 16);
             procesarOpcion(opcion);
-        } while (opcion != 12);
+        } while (opcion != 16);
     }
 
     private void mostrarMenuPrincipal() {
@@ -43,10 +43,14 @@ public class MenuConsola {
         System.out.println("6. Eliminar libro");
         System.out.println("7. Registrar solicitud de préstamo");
         System.out.println("8. Mostrar cola de solicitudes");
-        System.out.println("9. Atender siguiente solicitud");
-        System.out.println("10. Registrar devolución");
-        System.out.println("11. Mostrar reporte");
-        System.out.println("12. Salir");
+        System.out.println("9. Ver siguiente solicitud en espera");
+        System.out.println("10. Atender siguiente solicitud");
+        System.out.println("11. Cancelar siguiente solicitud (sin atender)");
+        System.out.println("12. Cancelar solicitud de un estudiante específico");
+        System.out.println("13. Vaciar cola de solicitudes");
+        System.out.println("14. Registrar devolución");
+        System.out.println("15. Mostrar reporte");
+        System.out.println("16. Salir");
         System.out.println("=========================================");
     }
 
@@ -77,15 +81,27 @@ public class MenuConsola {
                 servicio.mostrarColaSolicitudes();
                 break;
             case 9:
-                servicio.atenderSiguienteSolicitud();
+                ejecutarVerSiguienteSolicitud();
                 break;
             case 10:
-                ejecutarRegistrarDevolucion();
+                servicio.atenderSiguienteSolicitud();
                 break;
             case 11:
-                servicio.mostrarReporte();
+                ejecutarCancelarSiguienteSolicitud();
                 break;
             case 12:
+                ejecutarCancelarSolicitudPorEstudiante();
+                break;
+            case 13:
+                ejecutarVaciarColaSolicitudes();
+                break;
+            case 14:
+                ejecutarRegistrarDevolucion();
+                break;
+            case 15:
+                servicio.mostrarReporte();
+                break;
+            case 16:
                 System.out.println("\nGracias por usar QuickLibrary. ¡Hasta pronto!");
                 break;
         }
@@ -214,5 +230,66 @@ public class MenuConsola {
         System.out.println("\n--- REGISTRAR DEVOLUCIÓN DE LIBRO ---");
         int codigo = Validador.leerEntero("Ingrese el código del libro devuelto: ");
         servicio.registrarDevolucion(codigo);
+    }
+
+    // ==========================================
+    // Persona 2: Gestión de Solicitudes de Préstamo (Cola)
+    // ==========================================
+
+    /**
+     * Opción 9: Muestra la solicitud al frente de la cola sin retirarla (peek).
+     */
+    private void ejecutarVerSiguienteSolicitud() {
+        System.out.println("\n--- SIGUIENTE SOLICITUD EN ESPERA ---");
+        SolicitudPrestamo siguiente = servicio.consultarSiguienteSolicitud();
+        if (siguiente == null) {
+            System.out.println("No hay solicitudes pendientes en la cola.");
+        } else {
+            System.out.println(siguiente);
+        }
+    }
+
+    /**
+     * Opción 11: Cancela/retira la solicitud al frente de la cola sin aprobar
+     * el préstamo (dequeue directo, distinto de "Atender siguiente solicitud").
+     */
+    private void ejecutarCancelarSiguienteSolicitud() {
+        System.out.println("\n--- CANCELAR SIGUIENTE SOLICITUD ---");
+        SolicitudPrestamo cancelada = servicio.cancelarSiguienteSolicitud();
+        if (cancelada == null) {
+            System.out.println("No hay solicitudes pendientes para cancelar.");
+        } else {
+            System.out.println("Solicitud cancelada (no se realizó el préstamo):");
+            System.out.println(cancelada);
+        }
+    }
+
+    /**
+     * Opción 12: Cancela la solicitud de un estudiante específico, esté donde
+     * esté en la cola (no necesariamente al frente).
+     */
+    private void ejecutarCancelarSolicitudPorEstudiante() {
+        System.out.println("\n--- CANCELAR SOLICITUD DE UN ESTUDIANTE ---");
+        String codEstudiante = Validador.leerCadena("Ingrese el código del estudiante: ");
+        SolicitudPrestamo cancelada = servicio.cancelarSolicitudPorEstudiante(codEstudiante);
+        if (cancelada == null) {
+            System.out.println("Error: No se encontró ninguna solicitud pendiente para el código " + codEstudiante);
+        } else {
+            System.out.println("Éxito: Solicitud cancelada para el estudiante " + cancelada.getNombreEstudiante());
+        }
+    }
+
+    /**
+     * Opción 13: Vacía completamente la cola de solicitudes (operación de mantenimiento).
+     */
+    private void ejecutarVaciarColaSolicitudes() {
+        System.out.println("\n--- VACIAR COLA DE SOLICITUDES ---");
+        String confirmacion = Validador.leerCadena("¿Está seguro que desea eliminar TODAS las solicitudes pendientes? (S/N): ");
+        if (confirmacion.equalsIgnoreCase("S")) {
+            int eliminadas = servicio.vaciarColaSolicitudes();
+            System.out.println("Éxito: Se eliminaron " + eliminadas + " solicitud(es) de la cola.");
+        } else {
+            System.out.println("Operación cancelada.");
+        }
     }
 }
