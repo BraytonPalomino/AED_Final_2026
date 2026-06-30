@@ -1,0 +1,11 @@
+# Carpetas de compilación de Java y Eclipse
+bin/
+*.class
+
+# Archivos temporales o de configuración local de Eclipse (opcional pero recomendado)
+.metadata/
+.recommenders/
+# Descomentar las siguientes líneas si no deseas compartir la configuración del proyecto de Eclipse:
+# .settings/
+# .project
+# .classpath
