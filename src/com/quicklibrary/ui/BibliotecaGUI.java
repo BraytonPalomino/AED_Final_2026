@@ -287,9 +287,37 @@ public class BibliotecaGUI extends JFrame {
     }
 
     private void ejecutarBuscarPorCategoria() {
-        String categoria = JOptionPane.showInputDialog(this, "Ingrese la categoría a buscar:");
-        if (categoria == null || categoria.trim().isEmpty()) return;
-        servicio.buscarLibrosPorCategoria(categoria.trim());
+        // Recolectar categorías únicas del catálogo (ordenadas alfabéticamente)
+        java.util.Set<String> categorias = new java.util.TreeSet<>();
+        servicio.getCatalogo().recorridoInorden(libro -> {
+            if (libro.getCategoria() != null && !libro.getCategoria().trim().isEmpty()) {
+                categorias.add(libro.getCategoria().trim());
+            }
+        });
+
+        if (categorias.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay categorías registradas en el catálogo.", "Información", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Convertir a un arreglo para mostrarlo en el dropdown del diálogo
+        String[] opciones = categorias.toArray(new String[0]);
+
+        String seleccion = (String) JOptionPane.showInputDialog(
+                this,
+                "Seleccione la categoría a buscar:",
+                "Buscar por Categoría",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
+        );
+
+        if (seleccion != null) {
+            System.out.println("\nBuscando libros de la categoría: " + seleccion);
+            servicio.buscarLibrosPorCategoria(seleccion);
+            actualizarTablasYVistas();
+        }
     }
 
     private void ejecutarModificarLibro() {
