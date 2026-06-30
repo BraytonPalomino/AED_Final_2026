@@ -239,7 +239,20 @@ public class BibliotecaServicio {
         return eliminada;
     }
     
-    
+    /**
+     * Vacía por completo la cola de solicitudes de préstamo pendientes.
+     * Operación de mantenimiento: reinicializa la cola al estado vacío.
+     *
+     * @return la cantidad de solicitudes que fueron descartadas.
+     */
+    public int vaciarColaSolicitudes() {
+        int eliminadas = 0;
+        while (!colaSolicitudes.isEmpty()) {
+            colaSolicitudes.dequeue();
+            eliminadas++;
+        }
+        return eliminadas;
+    }
     
     
     
