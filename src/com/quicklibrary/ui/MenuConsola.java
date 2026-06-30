@@ -230,4 +230,18 @@ public class MenuConsola {
         int codigo = Validador.leerEntero("Ingrese el código del libro devuelto: ");
         servicio.registrarDevolucion(codigo);
     }
+    
+    /**
+     * Opción 9: Muestra la solicitud al frente de la cola sin retirarla (peek).
+     */
+    private void ejecutarVerSiguienteSolicitud() {
+        System.out.println("\n--- SIGUIENTE SOLICITUD EN ESPERA ---");
+        SolicitudPrestamo siguiente = servicio.consultarSiguienteSolicitud();
+        if (siguiente == null) {
+            System.out.println("No hay solicitudes pendientes en la cola.");
+        } else {
+            System.out.println(siguiente);
+        }
+    }
+    
 }
