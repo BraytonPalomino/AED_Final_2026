@@ -53,7 +53,6 @@ public class MenuConsola {
         System.out.println("16. Salir");
         System.out.println("=========================================");
     }
-
     private void procesarOpcion(int opcion) {
         switch (opcion) {
             case 1:
@@ -81,15 +80,27 @@ public class MenuConsola {
                 servicio.mostrarColaSolicitudes();
                 break;
             case 9:
-                servicio.atenderSiguienteSolicitud();
+                ejecutarVerSiguienteSolicitud();
                 break;
             case 10:
-                ejecutarRegistrarDevolucion();
+                servicio.atenderSiguienteSolicitud();
                 break;
             case 11:
-                servicio.mostrarReporte();
+                ejecutarCancelarSiguienteSolicitud();
                 break;
             case 12:
+                ejecutarCancelarSolicitudPorEstudiante();
+                break;
+            case 13:
+                ejecutarVaciarColaSolicitudes();
+                break;
+            case 14:
+                ejecutarRegistrarDevolucion();
+                break;
+            case 15:
+                servicio.mostrarReporte();
+                break;
+            case 16:
                 System.out.println("\nGracias por usar QuickLibrary. ¡Hasta pronto!");
                 break;
         }
