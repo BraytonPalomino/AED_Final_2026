@@ -1,0 +1,8 @@
+=========================================
+            REPORTE GENERAL              
+=========================================
+Cantidad total de libros:       30
+Cantidad de libros disponibles: 28
+Cantidad de libros prestados:   2
+Solicitudes de préstamo en cola: 0
+=========================================

@@ -180,7 +180,14 @@ public class BibliotecaGUI extends JFrame {
         // 1. Actualizar Tabla de Libros respetando el filtro de categoría
         modeloTabla.setRowCount(0);
         servicio.getCatalogo().recorridoInorden(libro -> {
-            if (filtroCategoria == null || libro.getCategoria().equalsIgnoreCase(filtroCategoria)) {
+            boolean coincide = false;
+            if (filtroCategoria == null) {
+                coincide = true;
+            } else if (libro.getCategoria() != null) {
+                coincide = libro.getCategoria().trim().equalsIgnoreCase(filtroCategoria.trim());
+            }
+            
+            if (coincide) {
                 modeloTabla.addRow(new Object[]{
                         libro.getCodigo(),
                         libro.getTitulo(),
