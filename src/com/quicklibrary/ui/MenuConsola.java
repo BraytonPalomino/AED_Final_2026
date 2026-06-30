@@ -192,6 +192,13 @@ public class MenuConsola {
             return;
         }
 
+        // Validación de seguridad: bloquear si está prestado
+        if (libro.getEstado() == EstadoLibro.PRESTADO) {
+            System.out.println("ADVERTENCIA DE SEGURIDAD: El libro \"" + libro.getTitulo() + "\" se encuentra actualmente PRESTADO.");
+            System.out.println("Error: No se puede eliminar físicamente un libro hasta que sea devuelto.");
+            return;
+        }
+
         System.out.println("Se eliminará: " + libro.getTitulo());
         String confirmacion = Validador.leerCadena("¿Está seguro? (S/N): ");
         if (confirmacion.equalsIgnoreCase("S")) {
