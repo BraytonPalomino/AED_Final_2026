@@ -28,6 +28,9 @@ public class BibliotecaGUI extends JFrame {
     private JTextArea areaCola;
     private JTextArea areaConsola;
     
+    // Estado de filtros visuales
+    private String filtroCategoria = null;
+    
     public BibliotecaGUI(BibliotecaServicio servicio) {
         this.servicio = servicio;
         
@@ -174,17 +177,19 @@ public class BibliotecaGUI extends JFrame {
      * Actualiza la tabla del catálogo y el visor de la cola de solicitudes.
      */
     private void actualizarTablasYVistas() {
-        // 1. Actualizar Tabla de Libros
+        // 1. Actualizar Tabla de Libros respetando el filtro de categoría
         modeloTabla.setRowCount(0);
         servicio.getCatalogo().recorridoInorden(libro -> {
-            modeloTabla.addRow(new Object[]{
-                    libro.getCodigo(),
-                    libro.getTitulo(),
-                    libro.getAutor(),
-                    libro.getCategoria(),
-                    libro.getAnio(),
-                    libro.getEstado()
-            });
+            if (filtroCategoria == null || libro.getCategoria().equalsIgnoreCase(filtroCategoria)) {
+                modeloTabla.addRow(new Object[]{
+                        libro.getCodigo(),
+                        libro.getTitulo(),
+                        libro.getAutor(),
+                        libro.getCategoria(),
+                        libro.getAnio(),
+                        libro.getEstado()
+                });
+            }
         });
 
         // 2. Actualizar Vista de Cola
@@ -214,6 +219,7 @@ public class BibliotecaGUI extends JFrame {
 
     private void mostrarTodosLosLibros() {
         System.out.println("\n--- LISTADO COMPLETO DEL CATÁLOGO ---");
+        this.filtroCategoria = null; // Limpiar filtro al mostrar todos
         servicio.mostrarTodosLosLibros();
         actualizarTablasYVistas();
     }
@@ -315,6 +321,7 @@ public class BibliotecaGUI extends JFrame {
 
         if (seleccion != null) {
             System.out.println("\nBuscando libros de la categoría: " + seleccion);
+            this.filtroCategoria = seleccion; // Aplicar filtro en la tabla
             servicio.buscarLibrosPorCategoria(seleccion);
             actualizarTablasYVistas();
         }
