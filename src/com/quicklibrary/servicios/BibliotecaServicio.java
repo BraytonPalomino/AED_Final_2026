@@ -208,6 +208,41 @@ public class BibliotecaServicio {
         }
         return colaSolicitudes.dequeue();
     }
+    
+    /**
+     * Cancela la solicitud de un estudiante específico, esté o no al frente
+     * de la cola. Como Cola<T> solo expone enqueue/dequeue/peek (TDA puro,
+     * sin acceso a los nodos internos), la única forma de "sacar del medio"
+     * es reconstruir la cola completa usando esas mismas operaciones:
+     * se desencola todo, se descarta la coincidencia y se vuelve a encolar
+     * el resto en su orden original.
+     *
+     * Complejidad: O(n), donde n es el número de solicitudes en cola.
+     *
+     * @param codigoEstudiante código del estudiante cuya solicitud se cancela.
+     * @return la solicitud cancelada, o null si no se encontró ninguna coincidencia.
+     */
+    public SolicitudPrestamo cancelarSolicitudPorEstudiante(String codigoEstudiante) {
+        int totalOriginal = colaSolicitudes.size();
+        SolicitudPrestamo eliminada = null;
+
+        for (int i = 0; i < totalOriginal; i++) {
+            SolicitudPrestamo actual = colaSolicitudes.dequeue();
+            if (eliminada == null && actual.getCodigoEstudiante().equalsIgnoreCase(codigoEstudiante)) {
+                // Esta es la solicitud que queremos cancelar: no se vuelve a encolar.
+                eliminada = actual;
+            } else {
+                // Cualquier otra solicitud se reinserta para conservar el orden FIFO.
+                colaSolicitudes.enqueue(actual);
+            }
+        }
+        return eliminada;
+    }
+    
+    
+    
+    
+    
     // ==========================================
     // RF04. Préstamo de Libros
     // ==========================================
