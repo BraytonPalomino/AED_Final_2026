@@ -21,12 +21,15 @@ public class Main {
         // Si no existe, LectorCSV cargará automáticamente los 30 libros por defecto.
         LectorCSV.cargarCatalogoInicial(servicio.getCatalogo(), "libros.csv");
 
-        // 3. Lanzar la interfaz de consola
-        MenuConsola menu = new MenuConsola(servicio);
-        menu.iniciar();
-
-        // 4. Guardar catálogo al salir del programa
-        System.out.println("\nGuardando cambios en el catálogo...");
-        LectorCSV.guardarCatalogo(servicio.getCatalogo(), "libros.csv");
+        // 3. Lanzar la interfaz gráfica (GUI)
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            try {
+                // Configurar Look and Feel nativo del sistema operativo para mejor estética
+                javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                // Ignorar si no se puede aplicar
+            }
+            new com.quicklibrary.ui.BibliotecaGUI(servicio).setVisible(true);
+        });
     }
 }
